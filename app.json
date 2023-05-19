@@ -1,51 +1,61 @@
 {
-  "expo": {
-    "name": "Code4Change",
-    "slug": "check-in",
-    "version": "1.0.0",
-    "description": "Check In Event Application",
-    "githubUrl": "https://gitlab.com/code4change1/checkin-app/checkin-mobile-app.git",
-    "ios": {
-      "bundleIdentifier": "com.code4change.checkin",
-      "buildNumber": "1",
-      "runtimeVersion": "1.0.0"
-    },
-    "android": {
-      "package": "com.code4change.checkin",
-      "versionCode": 1,
-      "runtimeVersion": {
-        "policy": "sdkVersion"
-      }
-    },
-    "privacy": "public",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "orientation": "portrait",
-    "userInterfaceStyle": "automatic",
-    "icon": "./src/assets/images/image-app-icon.png",
-    "splash": {
-      "image": "src/assets/images/image-splash.png",
-      "resizeMode": "contain"
-    },
-    "assetBundlePatterns": [
-      "src/assets/images/*",
-      "src/assets/fonts",
-      "src/layouts/**/assets/*"
-    ],
-    "androidStatusBar": {
-      "barStyle": "dark-content",
-      "backgroundColor": "#F7F9FC"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "1656f4c9-4825-462a-9d4d-f76c0229aaf7"
-      }
-    },
-    "owner": "tuanpha123",
-    "updates": {
-      "url": "https://u.expo.dev/1656f4c9-4825-462a-9d4d-f76c0229aaf7"
-    }
-  }
+	"expo": {
+		"name": "Code4Change",
+		"slug": "check-in",
+		"version": "1.0.1",
+		"description": "Check In Event Application",
+		"githubUrl": "https://github.com/hoanganhtuanbkdn/check-in-app",
+		"runtimeVersion": {
+			"policy": "sdkVersion"
+		},
+		"ios": {
+			"bundleIdentifier": "com.code4change.checkin",
+			"buildNumber": "2"
+		},
+		"android": {
+			"package": "com.code4change.checkin",
+			"versionCode": 2
+		},
+		"privacy": "public",
+		"platforms": ["ios", "android"],
+		"orientation": "portrait",
+		"userInterfaceStyle": "automatic",
+		"icon": "./src/assets/images/image-app-icon.png",
+		"splash": {
+			"image": "src/assets/images/image-splash.png",
+			"resizeMode": "contain"
+		},
+		"assetBundlePatterns": [
+			"src/assets/images/*",
+			"src/assets/fonts",
+			"src/layouts/**/assets/*"
+		],
+		"androidStatusBar": {
+			"barStyle": "dark-content",
+			"backgroundColor": "#F7F9FC"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "1656f4c9-4825-462a-9d4d-f76c0229aaf7"
+			}
+		},
+		"owner": "tuanpha123",
+		"updates": {
+			"url": "https://u.expo.dev/1656f4c9-4825-462a-9d4d-f76c0229aaf7"
+		},
+		"plugins": [
+			[
+				"expo-camera",
+				{
+					"cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+				}
+			],
+			[
+				"expo-barcode-scanner",
+				{
+					"cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+				}
+			]
+		]
+	}
 }

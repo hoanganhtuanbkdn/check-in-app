@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ListRenderItemInfo, StyleSheet } from 'react-native';
 import { List, Text } from '@ui-kitten/components';
 import { TrainingCard } from './extra/training-card.component';
 import { Training } from './extra/data';
+import { ServiceApi } from '../../../services/api';
 
 const trainings: Training[] = [
   Training.chestEasy(),
@@ -10,8 +11,10 @@ const trainings: Training[] = [
   Training.personalizedEasy(),
 ];
 
+
 export const TrainingsListScreen = (): React.ReactElement => {
 
+ 
   const displayTrainings: Training[] = trainings;
 
   const renderHeader = (): React.ReactElement => (
