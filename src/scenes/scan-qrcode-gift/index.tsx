@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Button, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import {
+	Button,
 	Divider,
 	TopNavigation,
 	TopNavigationAction,
@@ -8,6 +9,8 @@ import {
 import { SafeAreaLayout } from '../../components/safe-area-layout.component';
 import { ArrowIosBackIcon } from '../../components/icons';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import moment from 'moment';
+import { ServiceApi } from '../../services/api';
 
 export const ScanQRCodeGiftScreen = ({
 	navigation,
@@ -21,18 +24,60 @@ export const ScanQRCodeGiftScreen = ({
 	const [hasPermission, setHasPermission] = useState(false);
 	const [scanned, setScanned] = useState(false);
 
-	useEffect(() => {
-		const getBarCodeScannerPermissions = async () => {
-			const { status } = await BarCodeScanner.requestPermissionsAsync();
-			setHasPermission(status === 'granted');
-		};
+	const getBarCodeScannerPermissions = async () => {
+		const { status } = await BarCodeScanner.requestPermissionsAsync();
+		setHasPermission(status === 'granted');
+	};
 
+	useEffect(() => {
 		getBarCodeScannerPermissions();
 	}, []);
 
-	const handleBarCodeScanned = ({ type, data }: any) => {
+	const handleBarCodeScanned = async ({ type, data }: any) => {
+		if (scanned) return;
 		setScanned(true);
-		alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+		const participants = await ServiceApi.getParticipants({
+			where: {
+				code: data,
+			},
+		});
+
+		const targetParticipant = participants?.[0];
+		if (targetParticipant?.id) {
+			if (targetParticipant?.takeGiftAt) {
+				Alert.alert(
+					'QR Code Used',
+					`QR Code was used at: ${moment(
+						targetParticipant?.takeGiftAt
+					).format('YYYY-MM-DD hh:mm')}. `,
+					[
+						{
+							text: 'Cancel',
+							style: 'cancel',
+						},
+					]
+				);
+				return;
+			}
+
+			await ServiceApi.editParticipant(targetParticipant?.id, {
+				takeGiftAt: moment().utc()?.toISOString(),
+			});
+
+			Alert.alert(
+				'Success',
+				`Customer: ${targetParticipant?.name} - ${targetParticipant?.position} - ${targetParticipant?.company}  - ${targetParticipant?.note}`,
+				[
+					{
+						text: 'OK',
+					},
+				]
+			);
+
+			return;
+		}
+
+		alert(`QR Code incorrect`);
 	};
 
 	if (hasPermission === null) {
@@ -45,22 +90,21 @@ export const ScanQRCodeGiftScreen = ({
 	return (
 		<SafeAreaLayout style={styles.container} insets="top">
 			<TopNavigation
-				title="Check In QRCode"
+				title="Confirm Take Gift"
 				accessoryLeft={renderBackAction}
 			/>
 			<Divider />
 			<View style={styles.container}>
 				<BarCodeScanner
-					onBarCodeScanned={
-						scanned ? undefined : handleBarCodeScanned
-					}
+					onBarCodeScanned={handleBarCodeScanned}
 					style={StyleSheet.absoluteFillObject}
 				/>
 				{scanned && (
-					<Button
-						title={'Tap to Scan Again'}
-						onPress={() => setScanned(false)}
-					/>
+					<View style={styles.button}>
+						<Button size="medium" onPress={() => setScanned(false)}>
+							Continue
+						</Button>
+					</View>
 				)}
 			</View>
 		</SafeAreaLayout>
@@ -74,12 +118,11 @@ const styles = StyleSheet.create({
 	camera: {
 		flex: 1,
 	},
-	buttonContainer: {
+	text: {},
+	button: {
 		position: 'absolute',
 		bottom: 10,
 		left: 0,
 		right: 0,
 	},
-	button: {},
-	text: {},
 });

@@ -2,19 +2,20 @@
 	"expo": {
 		"name": "Code4Change",
 		"slug": "check-in",
-		"version": "1.0.1",
+		"version": "1.0.0",
 		"description": "Check In Event Application",
 		"githubUrl": "https://github.com/hoanganhtuanbkdn/check-in-app",
-		"runtimeVersion": {
-			"policy": "sdkVersion"
-		},
 		"ios": {
-			"bundleIdentifier": "com.code4change.checkin",
-			"buildNumber": "2"
+			"bundleIdentifier": "com.code4change.checkin-app",
+			"buildNumber": "4",
+			"runtimeVersion": "1.0.0"
 		},
 		"android": {
-			"package": "com.code4change.checkin",
-			"versionCode": 2
+			"package": "com.code4change.checkinapp",
+			"versionCode": 4,
+			"runtimeVersion": {
+				"policy": "sdkVersion"
+			}
 		},
 		"privacy": "public",
 		"platforms": ["ios", "android"],

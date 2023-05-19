@@ -38,6 +38,7 @@ export interface IEvent {
 }
 
 export interface IParticipant {
+	id?: number;
 	name?: string;
 	code?: string;
 	position?: string;

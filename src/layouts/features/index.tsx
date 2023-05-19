@@ -19,13 +19,13 @@ export default (): React.ReactElement => {
 		<Layout style={styles.container}>
 			<Setting
 				style={styles.setting}
-				hint="Check In With QR Code"
+				hint="Check In"
 				onPress={onCheckIn}
 			/>
 			<Setting
 				style={styles.setting}
 				onPress={onTakeGift}
-				hint="Take a Gift"
+				hint="Confirm Take Gift"
 			/>
 		</Layout>
 	);

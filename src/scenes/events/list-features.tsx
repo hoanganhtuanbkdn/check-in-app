@@ -12,14 +12,17 @@ import ContentView from '../../layouts/features';
 export const ListFeatureScreen = ({ navigation }: any): React.ReactElement => {
 	const renderBackAction = (): React.ReactElement => (
 		<TopNavigationAction
-			icon={ArrowIosBackIcon}
+			icon={ArrowIosBackIcon as any}
 			onPress={navigation.goBack}
 		/>
 	);
 
 	return (
 		<SafeAreaLayout style={styles.container} insets="top">
-			<TopNavigation title="Settings" accessoryLeft={renderBackAction} />
+			<TopNavigation
+				title="List Features"
+				accessoryLeft={renderBackAction}
+			/>
 			<Divider />
 			<ContentView />
 		</SafeAreaLayout>

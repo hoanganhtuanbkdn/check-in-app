@@ -1,18 +1,30 @@
 {
-  "cli": {
-    "version": ">= 3.13.0"
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {}
-  },
-  "submit": {
-    "production": {}
-  }
+	"cli": {
+		"version": ">= 3.13.0",
+		"promptToConfigurePushNotifications": false
+	},
+	"build": {
+		"development": {
+			"developmentClient": true,
+			"distribution": "internal"
+		},
+		"preview": {
+			"distribution": "internal"
+		},
+		"production": {}
+	},
+	"submit": {
+		"production": {
+			"android": {
+				"serviceAccountKeyPath": "./dna-ielts-0e2d05159790.json",
+				"track": "internal"
+			},
+			"ios": {
+				"appleId": "tuanpha.it@gmail.com",
+				"ascAppId": "1623336286",
+				"appleTeamId": "384DXMTVRL",
+				"sku": "com.code4change.check-in"
+			}
+		}
+	}
 }

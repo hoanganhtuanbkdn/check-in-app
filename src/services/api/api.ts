@@ -24,7 +24,17 @@ const createServiceApi = () => {
 		baseURL: baseURL,
 	});
 
-	const getUserMe = async () => api.get<IUser>('/users/me');
+	const getUserMe = async (token?: string) =>
+		api.get<IUser>(
+			'/users/me',
+			{},
+			{
+				headers: {
+					...api.headers,
+					authorization: 'Bearer ' + token,
+				},
+			}
+		);
 	const login = async (data?: { email: string; password: string }) =>
 		api.post('/users/login', data);
 
@@ -89,10 +99,18 @@ const createServiceApi = () => {
 		return {};
 	};
 
-	const getParticipants = async (filter?: Filter) =>
-		api.get<{ data: IParticipant[]; count: number }>('/participants', {
-			filter,
-		});
+	const getParticipants = async (filter?: Filter) => {
+		const res = await api.get<{ data: IParticipant[]; count: number }>(
+			'/participants',
+			{
+				filter,
+			}
+		);
+
+		if (isSuccess(res)) return res.data?.data || [];
+
+		return [];
+	};
 
 	const createParticipant = async (data: IParticipant) =>
 		api.post('/participants', data);
